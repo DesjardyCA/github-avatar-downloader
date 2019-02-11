@@ -7,3 +7,8 @@ function getRepoContributors(repoOwner, repoName, cb) {
     cb(err, body);
   });
 }
+
+getRepoContributors("jquery", "jquery", function (err, result) {
+  console.log("Errors:", err);
+  console.log("Result:", result);
+});
