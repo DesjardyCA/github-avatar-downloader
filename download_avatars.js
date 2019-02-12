@@ -3,6 +3,11 @@ var token = require('./secrets').GITHUB_TOKEN;
 var fs = require('fs');
 var inp = process.argv.slice(2);
 
+if (!inp[0] || !inp[1]) {
+  console.log('Please type both a username and a repository name!');
+  throw "needs username and repository";
+}
+
 console.log('Welcome to the GitHub Avatar Downloader!');
 
 function getRepoContributors(repoOwner, repoName, cb) {
