@@ -3,6 +3,7 @@ var token = require('./secrets').GITHUB_TOKEN;
 var fs = require('fs');
 var inp = process.argv.slice(2);
 
+// error handling for input before executing remainder of code
 if (!inp[0] || !inp[1]) {
   console.log('Please type both a username and a repository name!');
   throw "needs username and repository";
@@ -20,18 +21,19 @@ function getRepoContributors(repoOwner, repoName, cb) {
   };
 
   request(options, function (err, res, body) {
+    // calls getRepoContributors() to parse and return body as on object parsed by JSON
     var obj = cb(err, body);
 
+    // loops through each file to download and assigns filename to output as
     obj.forEach(elem => {
-      // console.log(elem['avatar_url']);
       downloadImageByURL(elem['avatar_url'], elem['login'] + '.jpg');
     });
   });
 }
 
+// parses body returned by request and outputs as an object
 getRepoContributors(inp[0], inp[1], function (err, result) {
   console.log("Errors:", err);
-  // console.log("Result:", result);
   return JSON.parse(result);
 });
 
@@ -46,5 +48,6 @@ function downloadImageByURL(url, filePath) {
     .on('end', function () {
       console.log('Download complete.');
     })
+    // writes file to unique file within folder "avatars"
     .pipe(fs.createWriteStream('avatars/' + filePath));
 }
