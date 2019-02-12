@@ -38,6 +38,10 @@ getRepoContributors(inp[0], inp[1], function (err, result) {
 });
 
 function downloadImageByURL(url, filePath) {
+  // check if 'avatars' folder exists, otherwise create
+  if (!fs.existsSync('avatars')) {
+    fs.mkdirSync('avatars');
+  }
   request.get(url)
     .on('error', function (err) {
       throw err;
