@@ -80,3 +80,4 @@ typings/
 .dynamodb/
 
 secrets.js
+/avatars/*
